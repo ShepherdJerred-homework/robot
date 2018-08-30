@@ -40,7 +40,48 @@ public class robot {
 
 //            System.out.println(Arrays.deepToString(grid));
 
-            Solution solution = move(grid, distance, startingRow, startingColumn, 0, columns, rows);
+            int moves = 0;
+
+            Solution solution = null;
+
+            int currentRow = startingRow;
+            int currentColumn = startingColumn;
+            while (currentRow >= 0 && currentColumn >= 0 && currentRow < rows && currentColumn < columns) {
+                char nextMove = grid[currentRow][currentColumn];
+                int distanceWhenLastVisited = distance[currentRow][currentColumn];
+
+                if (distanceWhenLastVisited != 0) {
+                    // we're in a loop
+                    int loopSize = moves - distanceWhenLastVisited;
+                    solution = new Solution(moves - loopSize, loopSize);
+                    break;
+                }
+
+                distance[currentRow][currentColumn] = moves;
+
+                switch (nextMove) {
+                    case 'N':
+                        currentRow -= 1;
+                        break;
+                    case 'E':
+                        currentColumn += 1;
+                        break;
+                    case 'S':
+                        currentRow += 1;
+                        break;
+                    case 'W':
+                        currentColumn -= 1;
+                        break;
+                    default:
+                        throw new IllegalArgumentException(nextMove + " is not a valid move");
+                }
+
+                moves += 1;
+            }
+
+            if (solution == null) {
+                solution = new Solution(moves);
+            }
 
             String s;
             if (solution.loop == 0) {
@@ -62,49 +103,6 @@ public class robot {
 
         }
         printWriter.close();
-    }
-
-    public static Solution move(char[][] grid, int[][] distance, int currentRow, int currentColumn, int currentDistanceTraveled, int columns, int rows) {
-        if (currentColumn < 0 || currentColumn > columns - 1 || currentRow < 0 || currentRow > rows - 1) {
-            // we found an exit
-//            System.out.println(String.format("Solution: c %s   r %s", currentColumn, currentRow));
-            return new Solution(currentDistanceTraveled);
-        }
-
-        char nextMove = grid[currentRow][currentColumn];
-        int distanceWhenLastVisited = distance[currentRow][currentColumn];
-
-        if (distanceWhenLastVisited != 0) {
-            // we're in a loop
-            int loopSize = currentDistanceTraveled - distanceWhenLastVisited;
-            return new Solution(currentDistanceTraveled - loopSize, loopSize);
-        }
-
-        int newRow = currentRow;
-        int newColumn = currentColumn;
-
-        switch (nextMove) {
-            case 'N':
-                newRow -= 1;
-                break;
-            case 'E':
-                newColumn += 1;
-                break;
-            case 'S':
-                newRow += 1;
-                break;
-            case 'W':
-                newColumn -= 1;
-                break;
-            default:
-                throw new IllegalArgumentException(nextMove + " is not a valid move");
-        }
-
-//        System.out.println(String.format("Moving %s | r %s  c %s", nextMove, newRow, newColumn));
-
-        distance[currentRow][currentColumn] = currentDistanceTraveled;
-
-        return move(grid, distance, newRow, newColumn, currentDistanceTraveled + 1, columns, rows);
     }
 
     public static class Solution {
