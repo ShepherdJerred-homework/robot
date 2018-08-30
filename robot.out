@@ -4,7 +4,7 @@
 1 instruction before exit
 2 instructions before a loop of 2 instructions
 1 instruction before a loop of 2 instructions
-1 instruction before a loop of 8 instructions
+0 instructions before a loop of 8 instructions
 1 instruction before a loop of 8 instructions
 1 instruction before exit
 1 instruction before exit
@@ -15,7 +15,7 @@
 5 instructions before exit
 6 instructions before exit
 3 instructions before a loop of 12 instructions
-1 instruction before a loop of 100 instructions
+0 instructions before a loop of 100 instructions
 100 instructions before exit
 1 instruction before a loop of 120 instructions
 121 instructions before exit

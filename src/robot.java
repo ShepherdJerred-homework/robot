@@ -46,14 +46,17 @@ public class robot {
 
             int currentRow = startingRow;
             int currentColumn = startingColumn;
+
             while (currentRow >= 0 && currentColumn >= 0 && currentRow < rows && currentColumn < columns) {
+                moves += 1;
+
                 char nextMove = grid[currentRow][currentColumn];
                 int distanceWhenLastVisited = distance[currentRow][currentColumn];
 
                 if (distanceWhenLastVisited != 0) {
                     // we're in a loop
                     int loopSize = moves - distanceWhenLastVisited;
-                    solution = new Solution(moves - loopSize, loopSize);
+                    solution = new Solution(moves - loopSize - 1, loopSize);
                     break;
                 }
 
@@ -75,8 +78,6 @@ public class robot {
                     default:
                         throw new IllegalArgumentException(nextMove + " is not a valid move");
                 }
-
-                moves += 1;
             }
 
             if (solution == null) {
