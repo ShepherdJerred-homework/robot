@@ -4,7 +4,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class robot {
@@ -39,25 +38,27 @@ public class robot {
                 }
             }
 
-            System.out.println(Arrays.deepToString(grid));
+//            System.out.println(Arrays.deepToString(grid));
 
             Solution solution = move(grid, distance, startingRow, startingColumn, 0, columns, rows);
 
+            String s;
             if (solution.loop == 0) {
                 if (solution.moves == 1) {
-                    printWriter.println("1 instruction before exit");
+                    s = "1 instruction before exit";
                 } else {
-                    printWriter.println(String.format("%s instructions before exit", solution.moves));
+                    s = String.format("%s instructions before exit", solution.moves);
                 }
             } else {
                 if (solution.moves == 1) {
-                    printWriter.println(String.format("1 instruction before a loop of %s instructions", solution.loop));
+                    s = String.format("1 instruction before a loop of %s instructions", solution.loop);
                 } else {
-                    printWriter.println(String.format("%s instruction before a loop of %s instructions", solution.moves, solution.loop));
+                    s = String.format("%s instructions before a loop of %s instructions", solution.moves, solution.loop);
                 }
             }
 
-            System.out.println(solution);
+            printWriter.println(s);
+            System.out.println(s);
 
         }
         printWriter.close();
@@ -66,7 +67,7 @@ public class robot {
     public static Solution move(char[][] grid, int[][] distance, int currentRow, int currentColumn, int currentDistanceTraveled, int columns, int rows) {
         if (currentColumn < 0 || currentColumn > columns - 1 || currentRow < 0 || currentRow > rows - 1) {
             // we found an exit
-            System.out.println(String.format("Solution: c %s   r %s", currentColumn, currentRow));
+//            System.out.println(String.format("Solution: c %s   r %s", currentColumn, currentRow));
             return new Solution(currentDistanceTraveled);
         }
 
@@ -99,7 +100,7 @@ public class robot {
                 throw new IllegalArgumentException(nextMove + " is not a valid move");
         }
 
-        System.out.println(String.format("Moving %s | r %s  c %s", nextMove, newRow, newColumn));
+//        System.out.println(String.format("Moving %s | r %s  c %s", nextMove, newRow, newColumn));
 
         distance[currentRow][currentColumn] = currentDistanceTraveled;
 
